@@ -1,0 +1,10 @@
+{
+  "pair": "ALKIMI/USDC",
+  "totalAmount": "1000",
+  "duration": 3600,
+  "interval": 300,
+  "slippageTolerance": 0.01,
+  "minOrderSize": "10",
+  "maxOrderSize": "100"
+}
+

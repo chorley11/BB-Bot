@@ -1,0 +1,34 @@
+{
+  "name": "bluefin-twap-buyback-bot",
+  "version": "1.0.0",
+  "description": "TWAP buyback bot for ALKIMI/USDC on Bluefin DEX (Sui blockchain)",
+  "main": "dist/bot.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/bot.js",
+    "dev": "ts-node --esm src/bot.ts",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "sui",
+    "bluefin",
+    "dex",
+    "twap",
+    "trading-bot"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@fireflyprotocol/bluefin-v2-client-ts": "^1.0.0",
+    "@mysten/sui.js": "^1.0.0",
+    "dotenv": "^16.3.1",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
+
