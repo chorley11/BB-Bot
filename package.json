@@ -20,8 +20,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@fireflyprotocol/bluefin-v2-client-ts": "^1.0.0",
-    "@mysten/sui.js": "^1.0.0",
+    "@bluefin-exchange/bluefin-v2-client": "^6.5.1",
+    "@mysten/sui": "^1.45.2",
     "dotenv": "^16.3.1",
     "winston": "^3.11.0"
   },
