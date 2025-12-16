@@ -207,9 +207,9 @@ The bot includes robust error handling:
 
 **Note**: The current implementation includes a placeholder for Bluefin API integration. You'll need to:
 
-1. Install the actual Bluefin client library:
+1. The Bluefin client library is already included:
    ```bash
-   npm install @fireflyprotocol/bluefin-v2-client-ts
+   npm install @bluefin-exchange/bluefin-v2-client
    ```
 
 2. Update `src/bluefin-client.ts` to use the actual Bluefin client library methods for:
