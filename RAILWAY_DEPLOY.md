@@ -45,6 +45,15 @@ Should show:
 }
 ```
 
+## npm Warning About Production Config
+
+If you see this warning:
+```
+npm warn config production Use `--omit=dev` instead.
+```
+
+**This is harmless** - it's just npm warning about deprecated configuration. The build will still succeed. Railway may set this internally, but it doesn't affect the installation since we need devDependencies (TypeScript) for the build anyway.
+
 ## If Issue Persists
 
 1. Disconnect and reconnect the GitHub repository in Railway
