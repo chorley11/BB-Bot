@@ -19,14 +19,32 @@ export function loadConfig(): AppConfig {
   const bluefinApiUrl = process.env.BLUEFIN_API_URL;
   const logLevel = process.env.LOG_LEVEL || 'info';
 
-  // Load TWAP config from JSON file
+  // Load TWAP config - try environment variables first (for Railway), then JSON file
   let twapConfig: TWAPConfig;
-  try {
-    const configPath = join(process.cwd(), 'config', 'config.json');
-    const configFile = readFileSync(configPath, 'utf-8');
-    twapConfig = JSON.parse(configFile);
-  } catch (error) {
-    throw new Error(`Failed to load config/config.json: ${error instanceof Error ? error.message : String(error)}`);
+  
+  // Check if TWAP config is provided via environment variables (Railway-friendly)
+  if (process.env.TWAP_PAIR && process.env.TWAP_TOTAL_AMOUNT) {
+    twapConfig = {
+      pair: process.env.TWAP_PAIR,
+      totalAmount: process.env.TWAP_TOTAL_AMOUNT,
+      duration: parseInt(process.env.TWAP_DURATION || '3600', 10),
+      interval: parseInt(process.env.TWAP_INTERVAL || '300', 10),
+      slippageTolerance: parseFloat(process.env.TWAP_SLIPPAGE_TOLERANCE || '0.01'),
+      minOrderSize: process.env.TWAP_MIN_ORDER_SIZE || '10',
+      maxOrderSize: process.env.TWAP_MAX_ORDER_SIZE || '100',
+    };
+  } else {
+    // Try to load from JSON file (local development)
+    try {
+      const configPath = join(process.cwd(), 'config', 'config.json');
+      const configFile = readFileSync(configPath, 'utf-8');
+      twapConfig = JSON.parse(configFile);
+    } catch (error) {
+      throw new Error(
+        `Failed to load TWAP config. Either set TWAP_* environment variables or ensure config/config.json exists. ` +
+        `Error: ${error instanceof Error ? error.message : String(error)}`
+      );
+    }
   }
 
   // Validate TWAP config

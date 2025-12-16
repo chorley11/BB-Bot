@@ -28,7 +28,16 @@ export class SuiWalletManager implements WalletManager {
 
   private loadKeystore(keystorePath: string, password?: string): Ed25519Keypair {
     try {
-      const keystoreData = readFileSync(keystorePath, 'utf-8');
+      // Support loading keystore from environment variable (Railway-friendly)
+      // If KEYSTORE_DATA is set, use it directly (base64 encoded JSON)
+      let keystoreData: string;
+      if (process.env.KEYSTORE_DATA) {
+        keystoreData = Buffer.from(process.env.KEYSTORE_DATA, 'base64').toString('utf-8');
+      } else {
+        // Otherwise, load from file path
+        keystoreData = readFileSync(keystorePath, 'utf-8');
+      }
+      
       const keystore = JSON.parse(keystoreData);
 
       // Handle different keystore formats

@@ -123,6 +123,85 @@ npm run dev
    npm start
    ```
 
+## Railway Deployment
+
+This bot is configured for easy deployment on [Railway.app](https://railway.app/).
+
+### Quick Deploy
+
+1. **Connect Repository:**
+   - Go to [railway.app](https://railway.app/)
+   - Click "New Project" → "Deploy from GitHub Repo"
+   - Select your `BB-Bot` repository
+
+2. **Configure Environment Variables:**
+   Railway will automatically detect this as a Node.js project. Add these environment variables in Railway's dashboard:
+
+   **Required:**
+   ```
+   SUI_NETWORK=mainnet
+   KEYSTORE_PASSWORD=your_keystore_password
+   KEYSTORE_DATA=base64_encoded_keystore_json
+   ```
+
+   **TWAP Configuration (choose one method):**
+   
+   **Method 1: Environment Variables (Recommended for Railway)**
+   ```
+   TWAP_PAIR=ALKIMI/USDC
+   TWAP_TOTAL_AMOUNT=1000
+   TWAP_DURATION=3600
+   TWAP_INTERVAL=300
+   TWAP_SLIPPAGE_TOLERANCE=0.01
+   TWAP_MIN_ORDER_SIZE=10
+   TWAP_MAX_ORDER_SIZE=100
+   ```
+
+   **Method 2: Config File**
+   - Ensure `config/config.json` exists in your repository (it's in `.gitignore` by default)
+   - You may need to commit it or use Railway's file system
+
+3. **Prepare Keystore for Railway:**
+   
+   Since Railway doesn't support file uploads easily, encode your keystore as base64:
+   
+   ```bash
+   # On your local machine
+   cat wallet.keystore | base64
+   ```
+   
+   Copy the output and set it as `KEYSTORE_DATA` in Railway's environment variables.
+
+4. **Deploy:**
+   - Railway will automatically build and deploy
+   - Monitor logs in Railway's dashboard
+   - The bot will start automatically after deployment
+
+### Railway Configuration Files
+
+- `railway.json` - Railway build and deploy configuration
+- `.railwayignore` - Files to exclude from Railway deployment
+
+### Environment Variables Reference
+
+| Variable | Required | Description | Example |
+|----------|----------|-------------|---------|
+| `SUI_NETWORK` | No | Sui network (mainnet/testnet/devnet) | `mainnet` |
+| `KEYSTORE_PATH` | No* | Path to keystore file (local only) | `./wallet.keystore` |
+| `KEYSTORE_DATA` | No* | Base64 encoded keystore JSON (Railway) | `eyJzY2hlbWE...` |
+| `KEYSTORE_PASSWORD` | Yes | Password for encrypted keystores | `your_password` |
+| `BLUEFIN_API_URL` | No | Custom Bluefin API endpoint | (optional) |
+| `LOG_LEVEL` | No | Logging level | `info` |
+| `TWAP_PAIR` | No* | Trading pair | `ALKIMI/USDC` |
+| `TWAP_TOTAL_AMOUNT` | No* | Total tokens to buy | `1000` |
+| `TWAP_DURATION` | No* | Duration in seconds | `3600` |
+| `TWAP_INTERVAL` | No* | Order interval in seconds | `300` |
+| `TWAP_SLIPPAGE_TOLERANCE` | No* | Max slippage (0-1) | `0.01` |
+| `TWAP_MIN_ORDER_SIZE` | No* | Minimum order size | `10` |
+| `TWAP_MAX_ORDER_SIZE` | No* | Maximum order size | `100` |
+
+*Either use environment variables OR `config/config.json` file
+
 ### Stopping the Bot
 
 Press `Ctrl+C` to gracefully stop the bot. The bot will:
