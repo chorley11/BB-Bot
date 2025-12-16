@@ -65,7 +65,13 @@ LOG_LEVEL=info
 
 ### TWAP Configuration
 
-Edit `config/config.json` to configure your TWAP parameters:
+Create `config/config.json` from the example file:
+
+```bash
+cp config/config.example.json config/config.json
+```
+
+Then edit `config/config.json` to configure your TWAP parameters:
 
 ```json
 {
